@@ -1,0 +1,50 @@
+{
+  "name": "@voltstack/agsi",
+  "version": "0.1.0",
+  "description": "Zero-dependency TypeScript client for GIE's AGSI+ (EU gas storage) and ALSI (LNG terminal) transparency APIs",
+  "keywords": [
+    "agsi",
+    "alsi",
+    "gie",
+    "gas-storage",
+    "lng",
+    "energy",
+    "european-energy",
+    "natural-gas",
+    "energy-data",
+    "open-data"
+  ],
+  "license": "MIT",
+  "author": "Voltstack (https://voltstack.energy)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achristopoulos-cmyk/voltstack-agsi.git"
+  },
+  "homepage": "https://github.com/achristopoulos-cmyk/voltstack-agsi#readme",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/client.test.mjs",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.5.0"
+  }
+}
