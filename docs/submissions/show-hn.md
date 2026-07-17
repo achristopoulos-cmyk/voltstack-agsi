@@ -1,6 +1,6 @@
 # Show HN (news.ycombinator.com)
 
-**Prerequisite:** GitHub repo live is the minimum. npm publication (Stage 2) is strongly recommended before posting, not just optional: HN's own guidance says to "make it easy for users to try your thing out, ideally without barriers such as signups." A `git clone` + `npm run build` is a real barrier compared to `npm install @voltstack/agsi`; the GIE API key requirement is an unavoidable barrier (it's the upstream vendor's, not ours) but the package itself should be a one-line install by the time this posts.
+**Prerequisite:** GitHub repo live is the minimum. npm publication (Stage 2) is strongly recommended before posting, not just optional: HN's own guidance says to "make it easy for users to try your thing out, ideally without barriers such as signups." A `git clone` + `npm run build` is a real barrier compared to `npm install @voltstack.energy/agsi`; the GIE API key requirement is an unavoidable barrier (it's the upstream vendor's, not ours) but the package itself should be a one-line install by the time this posts.
 
 ## Eligibility verdict: eligible, ordinary Show HN post
 

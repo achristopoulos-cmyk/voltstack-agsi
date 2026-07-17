@@ -1,5 +1,5 @@
 {
-  "name": "@voltstack/agsi",
+  "name": "@voltstack.energy/agsi",
   "version": "0.1.0",
   "description": "Zero-dependency TypeScript client for GIE's AGSI+ (EU gas storage) and ALSI (LNG terminal) transparency APIs",
   "keywords": [

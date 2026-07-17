@@ -2,8 +2,8 @@
 // Requires GIE_API_KEY in the environment (register free at https://agsi.gie.eu/account).
 //
 // This example imports the local build for convenience when running inside
-// this repo. When installed from npm, import from '@voltstack/agsi' instead:
-//   import { GieClient, num } from '@voltstack/agsi';
+// this repo. When installed from npm, import from '@voltstack.energy/agsi' instead:
+//   import { GieClient, num } from '@voltstack.energy/agsi';
 import { GieClient } from '../dist/index.js';
 
 const apiKey = process.env.GIE_API_KEY;

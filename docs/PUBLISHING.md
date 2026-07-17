@@ -26,32 +26,25 @@ After this stage: the repo is public, has topics for discovery, and a tagged v0.
 
 Prerequisite: Stage 1 complete (a public GitHub repo makes the `repository`/`homepage`/`bugs` links in package.json resolve, and gives reviewers on awesome-lists something to check before Stage 3).
 
-This stage requires the founder's own npm account and a decision that hasn't been made yet:
-
-- **Scoped as `@voltstack/agsi`** (current package.json) requires creating the `voltstack` npm organization first (`npm org create voltstack` from the founder's logged-in npm account, or via npmjs.com), then publishing into it. Scoped packages need `--access public` explicitly or they publish private by default (which fails on the free tier anyway).
-- **Unscoped as `voltstack-agsi`** avoids creating an npm org at all. This means changing `name` in package.json from `@voltstack/agsi` to `voltstack-agsi` and updating the README install line and every reference to the package name (`import ... from '@voltstack/agsi'` becomes `from 'voltstack-agsi'`) before publishing. Simpler, but loses the `@voltstack/*` namespace for any future sibling packages.
-
-Pick one before running anything below. This runbook assumes the scoped name is kept (matching the current package.json); if unscoped is chosen instead, do the rename first and rerun the pre-publish checklist against the new name.
+This stage requires the founder's own npm account. Naming decision MADE 2026-07-17: the package publishes as **`@voltstack.energy/agsi`**, under the founder-owned `voltstack.energy` npm organization. The originally planned `@voltstack` scope turned out to be taken by an unrelated third party (npm user `codewithrodi`, materials-simulation packages, publishing since June 2026), so the plain scope is not available and must not be used; the domain-as-scope name is also self-verifying branding. Scoped packages need `--access public` explicitly or they publish private by default (which fails on the free tier anyway). Unscoped `voltstack-agsi` was considered and rejected (no scope protection, no package family, and no visual distinction from the third-party `@voltstack` scope).
 
 Pre-publish checklist (all of this requires a real `GIE_API_KEY`, which was not available this session):
 
 1. `GIE_API_KEY=<real key> npm test` and confirm the live smoke test passes (not skipped).
 2. `npm run build` and `npm pack --dry-run`; diff the file list against the one recorded in this repo's publication-prep report (`dist/`, `README.md`, `LICENSE`, `package.json`, nothing else).
-3. Confirm `npm whoami` is logged in as the founder's intended npm account, and that the `voltstack` org exists (scoped path) or the name rename is done (unscoped path).
+3. Confirm `npm whoami` is logged in as the founder's intended npm account, and that the account is an owner of the `voltstack.energy` org.
 4. Confirm `version` in package.json is the version being published (bump it if Stage 1's v0.1.0 tag and this publish are meant to diverge).
 
 Publish commands:
 
 ```sh
 npm login
-# scoped path (voltstack org already created):
-npm publish --access public
-
-# unscoped path (after renaming to voltstack-agsi in package.json and README):
 npm publish --access public
 ```
 
-After this stage: `npm install @voltstack/agsi` (or `npm install voltstack-agsi`) works for anyone. This is irreversible in the sense that npm does not allow re-publishing the same version number, so get the pre-publish checklist right first.
+Publishing requires an interactive 2FA approval in the browser, so the publish command must run in the founder's own terminal, not a non-interactive shell.
+
+After this stage: `npm install @voltstack.energy/agsi` works for anyone. This is irreversible in the sense that npm does not allow re-publishing the same version number, so get the pre-publish checklist right first.
 
 ## Stage 3: community submissions
 

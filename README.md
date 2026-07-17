@@ -1,4 +1,4 @@
-# @voltstack/agsi
+# @voltstack.energy/agsi
 
 [![CI](https://github.com/achristopoulos-cmyk/voltstack-agsi/actions/workflows/ci.yml/badge.svg)](https://github.com/achristopoulos-cmyk/voltstack-agsi/actions/workflows/ci.yml)
 
@@ -9,7 +9,7 @@ AGSI+ is the official daily source for European gas storage levels, the dataset 
 ## Install
 
 ```sh
-npm install @voltstack/agsi
+npm install @voltstack.energy/agsi
 ```
 
 ## Auth
@@ -19,7 +19,7 @@ Register (free) at [agsi.gie.eu/account](https://agsi.gie.eu/account) to get an 
 ## Quickstart
 
 ```ts
-import { GieClient, num } from '@voltstack/agsi';
+import { GieClient, num } from '@voltstack.energy/agsi';
 
 const agsi = new GieClient({ apiKey: process.env.GIE_API_KEY! });
 
