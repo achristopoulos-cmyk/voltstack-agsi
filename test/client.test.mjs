@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { GieClient, GieApiError, num } from '../dist/index.js';
+import { GieClient, GieApiError, num, alsiFullness } from '../dist/index.js';
 
 function mockFetch(handler) {
   const calls = [];
@@ -81,9 +81,23 @@ test('euAggregate() queries continent=EU with size 1', async () => {
   assert.equal(url.searchParams.get('size'), '1');
 });
 
-test('live: EU aggregate has a plausible fill % (set GIE_API_KEY to enable)', { skip: !process.env.GIE_API_KEY }, async () => {
-  const client = new GieClient({ apiKey: process.env.GIE_API_KEY });
-  const rec = await client.euAggregate();
-  const pct = num(rec?.full);
-  assert.ok(pct !== null && pct > 0 && pct <= 100, `expected 0<pct<=100, got ${pct}`);
+test('alsiFullness() divides inventory.gwh by dtmi.gwh', () => {
+  assert.equal(alsiFullness({ inventory: { gwh: '50' }, dtmi: { gwh: '200' } }), 25);
 });
+
+test('alsiFullness() treats a zero or missing dtmi.gwh as no data, not 0%', () => {
+  assert.equal(alsiFullness({ inventory: { gwh: '0' }, dtmi: { gwh: '0' } }), null);
+  assert.equal(alsiFullness({ inventory: { gwh: '10' }, dtmi: {} }), null);
+  assert.equal(alsiFullness({ inventory: {}, dtmi: { gwh: '200' } }), null);
+});
+
+test(
+  'live: EU aggregate has a plausible fill %',
+  { skip: process.env.GIE_API_KEY ? false : 'skipped: no GIE_API_KEY' },
+  async () => {
+    const client = new GieClient({ apiKey: process.env.GIE_API_KEY });
+    const rec = await client.euAggregate();
+    const pct = num(rec?.full);
+    assert.ok(pct !== null && pct > 0 && pct <= 100, `expected 0<pct<=100, got ${pct}`);
+  }
+);

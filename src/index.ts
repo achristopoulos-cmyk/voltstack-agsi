@@ -52,12 +52,14 @@ export interface GieRecord {
   withdrawal?: string;
   injectionCapacity?: string;
   withdrawalCapacity?: string;
-  /** ALSI only: LNG inventory in 1000 m³. */
-  lngInventory?: string;
-  /** ALSI only: send-out, GWh/d. */
+  /** ALSI only: send-out, GWh/d (a flow). */
   sendOut?: string;
-  /** ALSI only: declared total max inventory, 1000 m³. */
-  dtmi?: string;
+  /** ALSI only: declared max send-out capacity, GWh/d (a flow cap, distinct from `dtmi`). */
+  dtrs?: string;
+  /** ALSI only: LNG held in tanks right now, GWh (a stock). Nested, not a flat string. */
+  inventory?: { gwh?: string; [key: string]: unknown };
+  /** ALSI only: declared total max tank capacity, GWh (a stock cap). Nested, not a flat string. */
+  dtmi?: { gwh?: string; [key: string]: unknown };
   trend?: string;
   status?: string;
   info?: unknown;
@@ -93,6 +95,23 @@ export function num(value: string | undefined | null): number | null {
   if (value == null || value === '' || value === '-') return null;
   const n = Number(value);
   return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * ALSI only. Derive tank fullness as a percentage from `inventory.gwh` /
+ * `dtmi.gwh` (ALSI has no vendor-computed `full` field the way AGSI does).
+ *
+ * Some ALSI rows (observed for GB / "United Kingdom (Pre-Brexit)" on
+ * historical gas days) carry the literal string `"0"` for both fields
+ * rather than the usual `"-"` for unavailable data. Dividing those would
+ * read as a real 0% fullness rather than an honest gap, so this helper
+ * treats a zero or missing `dtmi.gwh` as "no data" and returns `null`.
+ */
+export function alsiFullness(record: Pick<GieRecord, 'inventory' | 'dtmi'>): number | null {
+  const inventory = num(record.inventory?.gwh);
+  const capacity = num(record.dtmi?.gwh);
+  if (inventory === null || capacity === null || capacity <= 0) return null;
+  return Number(((inventory / capacity) * 100).toFixed(1));
 }
 
 const BASE_URLS: Record<GieDataset, string> = {

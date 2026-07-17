@@ -9,9 +9,10 @@
     "gas-storage",
     "lng",
     "energy",
-    "european-energy",
-    "natural-gas",
     "energy-data",
+    "european-energy",
+    "europe",
+    "natural-gas",
     "open-data"
   ],
   "license": "MIT",
@@ -21,7 +22,11 @@
     "url": "git+https://github.com/achristopoulos-cmyk/voltstack-agsi.git"
   },
   "homepage": "https://github.com/achristopoulos-cmyk/voltstack-agsi#readme",
+  "bugs": {
+    "url": "https://github.com/achristopoulos-cmyk/voltstack-agsi/issues"
+  },
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -38,8 +43,12 @@
   "engines": {
     "node": ">=18"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
     "test": "node --test test/client.test.mjs",
     "prepublishOnly": "npm run build && npm test"
   },
